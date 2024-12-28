@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import IndexPage from "./pages/IndexPage.jsx";
 const App = () => {
   return (
     <BrowserRouter>
