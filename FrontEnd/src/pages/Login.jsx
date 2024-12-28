@@ -1,24 +1,29 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const Navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:4444/api/register", {
+    const response = await fetch("http://localhost:4444/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username,
         email,
         password,
       }),
     });
     const data = await response.json();
+
+    if (data.user) {
+      alert("Login Successfully");
+      Navigate("/");
+    }
+
     console.log(data);
   };
   return (
@@ -26,13 +31,6 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <h2 className="">Login</h2>
 
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <br />
         <input
           type="text"
           placeholder="email"
@@ -48,7 +46,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <button className="register-btn">Regsiter </button>
+        <button className="register-btn">login</button>
       </form>
     </div>
   );

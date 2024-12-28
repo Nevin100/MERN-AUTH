@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-
+const jwt = require("jsonwebtoken");
 //Initialize the express into app
 const app = express();
 
@@ -37,8 +37,17 @@ app.post("/api/login", async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
+
   if (UserDoc) {
-    return res.json({ status: "Ok", user: true });
+    const token = jwt.sign(
+      {
+        username: UserDoc.username,
+        email: UserDoc.email,
+      },
+      "secret456789"
+    );
+    console.log(token);
+    return res.json({ status: "Ok", user: token });
   } else {
     return res.json({ status: "Error", user: false });
   }
